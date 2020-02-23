@@ -1,0 +1,11 @@
+
+val SCREEN_WIDTH = 25;
+
+func write_char(char i8, x i32, y i32) void {
+  val p = mut*i16(0xb8000) + (y * SCREEN_WIDTH) + x;
+  @p = (0xFh << 8h) | i16(char);
+}
+
+func main() void {
+  write_char('A', 0, 0);
+}
