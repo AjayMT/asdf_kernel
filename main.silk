@@ -1,11 +1,23 @@
 
-val SCREEN_WIDTH = 25;
+val SCREEN_WIDTH = 80;
+val SCREEN_HEIGHT = 25;
+val VIDEO_BUFFER = 0xb8000;
 
-func write_char(char i8, x i32, y i32) void {
-  val p = mut*i16(0xb8000) + (y * SCREEN_WIDTH) + x;
-  @p = (0xFh << 8h) | i16(char);
+func write_char(char i8, color i16, x i32, y i32) void {
+  val p = mut*i16(VIDEO_BUFFER) + (y * SCREEN_WIDTH) + x;
+  @p = (color << 8h) | i16(char);
+}
+
+func clear_screen() void {
+  for var i = 0; !(i >= SCREEN_WIDTH * SCREEN_HEIGHT); i += 1 {
+    write_char(' ', 0h, i % SCREEN_WIDTH, i / SCREEN_WIDTH);
+  }
 }
 
 func main() void {
-  write_char('A', 0, 0);
+  clear_screen();
+  write_char('A', 0xFh, 0, 0);
+  write_char('S', 0x9h, 1, 0);
+  write_char('D', 0xAh, 0, 1);
+  write_char('F', 0xCh, 1, 1);
 }
