@@ -4,8 +4,8 @@ all: asdf.iso
 kernel.elf: boot.o main.o
 	clang --target=i386-elf -nostdlib -nostartfiles -T link.ld -o kernel.elf boot.o main.o
 
-boot.o: boot.s
-	nasm -f elf -o boot.o boot.s 
+boot.o: boot.asm
+	nasm -f elf -o boot.o boot.asm 
 
 main.S: main.silk
 	silk < main.silk | llc -mtriple=i386-elf -o main.S -
