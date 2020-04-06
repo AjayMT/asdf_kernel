@@ -9,7 +9,7 @@ func write_char(char i8, color i16, x i32, y i32) void {
 }
 
 func clear_screen() void {
-  for var i = 0; !(i >= SCREEN_WIDTH * SCREEN_HEIGHT); i += 1 {
+  for var i = 0; i < SCREEN_WIDTH * SCREEN_HEIGHT; i += 1 {
     write_char(' ', 0h, i % SCREEN_WIDTH, i / SCREEN_WIDTH);
   }
 }
